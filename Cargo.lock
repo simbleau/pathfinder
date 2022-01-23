@@ -896,32 +896,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "demo"
-version = "0.1.0"
-dependencies = [
- "color-backtrace",
- "euclid",
- "foreign-types",
- "gl",
- "io-surface",
- "jemallocator",
- "lazy_static 1.4.0",
- "metal 0.18.0",
- "nfd",
- "objc",
- "pathfinder_demo",
- "pathfinder_geometry",
- "pathfinder_gl",
- "pathfinder_gpu",
- "pathfinder_metal",
- "pathfinder_resources",
- "pathfinder_simd",
- "pretty_env_logger",
- "surfman 0.2.0",
- "winit 0.19.3",
-]
-
-[[package]]
 name = "derivative"
 version = "2.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2643,6 +2617,32 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
+]
+
+[[package]]
+name = "pathfinder_vgpu_glue"
+version = "0.1.0"
+dependencies = [
+ "color-backtrace",
+ "euclid",
+ "foreign-types",
+ "gl",
+ "io-surface",
+ "jemallocator",
+ "lazy_static 1.4.0",
+ "metal 0.18.0",
+ "nfd",
+ "objc",
+ "pathfinder_demo",
+ "pathfinder_geometry",
+ "pathfinder_gl",
+ "pathfinder_gpu",
+ "pathfinder_metal",
+ "pathfinder_resources",
+ "pathfinder_simd",
+ "pretty_env_logger",
+ "surfman 0.2.0",
+ "winit 0.19.3",
 ]
 
 [[package]]
