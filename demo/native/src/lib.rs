@@ -44,7 +44,7 @@ impl PathfinderRenderer {
 
 #[cfg(test)]
 #[test]
-pub fn run_100_frames() {
+fn run_100_frames() {
     let mut p = PathfinderRenderer::new();
     p.init();
     let durs = p.render(100);
