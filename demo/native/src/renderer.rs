@@ -559,3 +559,15 @@ fn convert_winit_event(
         _ => None,
     }
 }
+
+#[cfg(test)]
+#[test]
+pub fn run_100_frames() {
+    use super::*;
+
+    let mut p = PathfinderRenderer::new();
+    p.init();
+    let durs = p.render(100);
+
+    println!("Durs: {:?}", durs);
+}
