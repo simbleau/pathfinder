@@ -22,6 +22,7 @@ use pathfinder_geometry::rect::RectI;
 use pathfinder_geometry::vector::{vec2i, Vector2I};
 use pathfinder_resources::fs::FilesystemResourceLoader;
 use pathfinder_resources::ResourceLoader;
+use std::borrow::BorrowMut;
 use std::cell::Cell;
 use std::collections::VecDeque;
 use std::mem;
@@ -157,6 +158,13 @@ pub struct WindowImpl {
 
     #[allow(dead_code)]
     resource_loader: FilesystemResourceLoader,
+}
+
+impl WindowImpl {
+    pub fn quit(&mut self) {
+        let ref mut context = self.context.borrow_mut();
+        let _ = self.device.destroy_context(context).unwrap();
+    }
 }
 
 struct EventQueue {
