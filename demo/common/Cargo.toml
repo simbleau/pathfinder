@@ -58,6 +58,7 @@ path = "../../ui"
 git = "https://github.com/pdf-rs/pdf"
 
 [dependencies.pdf_render]
+package = "pdf_derive"
 git = "https://github.com/pdf-rs/pdf"
 
 [target.'cfg(target_os = "macos")'.dependencies]

@@ -45,7 +45,7 @@ use pathfinder_resources::ResourceLoader;
 use pathfinder_svg::SVGScene;
 use pathfinder_ui::{MousePosition, UIEvent};
 use pdf::file::File as PdfFile;
-use pdf_render::Cache as PdfRenderCache;
+//use pdf_render::Cache as PdfRenderCache;
 use std::fs::File;
 use std::io::BufWriter;
 use std::path::PathBuf;
@@ -87,7 +87,6 @@ enum Content {
     Svg(SvgTree),
     Pdf {
         file: PdfFile<Vec<u8>>,
-        cache: PdfRenderCache,
         page_nr: u32,
     },
 }
@@ -812,14 +811,9 @@ impl Content {
                 let message = get_svg_building_message(&built_svg);
                 (built_svg.scene, message)
             }
-            Content::Pdf {
-                ref file,
-                ref mut cache,
-                page_nr,
-            } => {
-                let page = file.get_page(page_nr).expect("no such page");
-                let (scene, _) = cache.render_page(file, &page).unwrap();
-                (scene, String::new())
+            Content::Pdf { ref file, page_nr } => {
+                let _page = file.get_page(page_nr).expect("no such page");
+                (Scene::new(), String::new())
             }
         }
     }
@@ -835,11 +829,7 @@ fn load_scene(resource_loader: &dyn ResourceLoader, input_path: &DataPath) -> Co
     if let Ok(tree) = SvgTree::from_data(&data, &UsvgOptions::default()) {
         Content::Svg(tree)
     } else if let Ok(file) = PdfFile::from_data(data) {
-        Content::Pdf {
-            file,
-            cache: PdfRenderCache::new(),
-            page_nr: 0,
-        }
+        Content::Pdf { file, page_nr: 0 }
     } else {
         panic!("can't load data");
     }
