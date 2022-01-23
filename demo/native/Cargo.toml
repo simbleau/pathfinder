@@ -2,11 +2,7 @@
 name = "pathfinder_vgpu_glue"
 version = "0.1.0"
 edition = "2018"
-authors = ["Patrick Walton <pcwalton@mimiga.net>"]
-
-[lib]
-name="pathfinder_vgpu_glue"
-path="src/lib.rs"
+authors = ["Patrick Walton <pcwalton@mimiga.net>", "Spencer C. Imbleau <spencer@imbleau.com>"]
 
 [features]
 pf-gl = ["pathfinder_demo/pf-gl"]
