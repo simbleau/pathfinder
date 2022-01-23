@@ -34,7 +34,7 @@ impl PathfinderRenderer {
         self.app = Some(renderer::init(options));
     }
 
-    pub fn render(mut self, frames: usize) -> Vec<Duration> {
+    pub fn render(&mut self, frames: usize) -> Vec<Duration> {
         let app = self.app.as_mut().unwrap();
         let durs = renderer::run(frames, app);
         app.window.quit();
