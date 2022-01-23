@@ -5,7 +5,7 @@ edition = "2018"
 authors = ["Patrick Walton <pcwalton@mimiga.net>"]
 
 [lib]
-name="pathfinder_renderer"
+name="pathfinder_vgpu_glue"
 path="src/lib.rs"
 
 [features]
