@@ -10,11 +10,9 @@
 
 //! A demo app for Pathfinder using SDL 2.
 
-#[macro_use]
-extern crate lazy_static;
-
-#[cfg(all(target_os = "macos", not(feature = "pf-gl")))]
-extern crate objc;
+// Added with time tracking
+#![allow(unused_imports)]
+#![allow(dead_code)]
 
 use euclid::default::Size2D;
 use nfd::Response;
@@ -33,6 +31,9 @@ use surfman::{declare_surfman, SurfaceAccess, SurfaceType};
 use winit::dpi::LogicalSize;
 use winit::{ControlFlow, ElementState, Event as WinitEvent, EventsLoop, EventsLoopProxy};
 use winit::{MouseButton, VirtualKeyCode, Window as WinitWindow, WindowBuilder, WindowEvent};
+
+// Added for time tracking
+use std::time::{Duration, Instant};
 
 #[cfg(any(not(target_os = "macos"), feature = "pf-gl"))]
 use gl;
@@ -68,23 +69,32 @@ lazy_static! {
     static ref EVENT_QUEUE: Mutex<Option<EventQueue>> = Mutex::new(None);
 }
 
-fn main() {
+pub fn init(options: Options) -> DemoApp<WindowImpl> {
+    // Tracers - Optional
     color_backtrace::install();
     pretty_env_logger::init();
 
-    // Read command line options.
-    let mut options = Options::default();
-    options.command_line_overrides();
-
+    // Create window
     let window = WindowImpl::new(&options);
     let window_size = window.size();
 
-    let mut app = DemoApp::new(window, window_size, options);
+    // Make not resizable
+    window.window.set_resizable(false);
 
-    let mut i: u64 = 0;
-    while !app.should_exit {
-        println!("Frame {}", i);
+    // Create App
+    let app = DemoApp::new(window, window_size, options);
+
+    app
+}
+
+pub fn run(frames: usize, app: &mut DemoApp<WindowImpl>) -> Vec<Duration> {
+    let mut i: usize = 0;
+    let mut durs = Vec::<Duration>::new();
+    while i < frames {
         i += 1;
+        let t1 = Instant::now();
+
+        // Begin rendering
         let mut events = vec![];
 
         let event = Event::User {
@@ -108,10 +118,17 @@ fn main() {
             app.composite_scene(scene_index);
         }
         app.finish_drawing_frame();
+
+        // Finished rendering
+        let t2 = Instant::now();
+        let dur = t2.duration_since(t1);
+        durs.push(dur);
     }
+
+    durs
 }
 
-struct WindowImpl {
+pub struct WindowImpl {
     window: WinitWindow,
 
     #[cfg(any(not(target_os = "macos"), feature = "pf-gl"))]

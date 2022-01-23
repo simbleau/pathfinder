@@ -4,6 +4,10 @@ version = "0.1.0"
 edition = "2018"
 authors = ["Patrick Walton <pcwalton@mimiga.net>"]
 
+[lib]
+name="pathfinder_renderer"
+path="src/lib.rs"
+
 [features]
 pf-gl = ["pathfinder_demo/pf-gl"]
 pf-no-simd = ["pathfinder_simd/pf-no-simd"]
