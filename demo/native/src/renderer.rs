@@ -71,10 +71,6 @@ lazy_static! {
 }
 
 pub fn init(options: Options) -> DemoApp<WindowImpl> {
-    // Tracers - Optional
-    color_backtrace::install();
-    pretty_env_logger::init();
-
     // Create window
     let window = WindowImpl::new(&options);
     let window_size = window.size();
