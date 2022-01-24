@@ -104,13 +104,6 @@ pub fn run(frames: usize, app: &mut DemoApp<WindowImpl>) -> Vec<Duration> {
         };
         events.push(event);
 
-        if !app.dirty {
-            events.push(app.window.get_event());
-        }
-        while let Some(event) = app.window.try_get_event() {
-            events.push(event);
-        }
-
         let scene_count = app.prepare_frame(events);
 
         app.draw_scene();

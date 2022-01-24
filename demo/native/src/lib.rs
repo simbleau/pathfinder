@@ -8,7 +8,7 @@ mod renderer;
 use renderer::*;
 
 use pathfinder_demo::{window::DataPath, BackgroundColor, DemoApp, Mode, Options, UIVisibility};
-use std::time::Duration;
+use std::{path::PathBuf, time::Duration};
 pub struct PathfinderRenderer {
     app: Option<DemoApp<WindowImpl>>,
 }
@@ -18,12 +18,17 @@ impl PathfinderRenderer {
         PathfinderRenderer { app: None }
     }
 
-    pub fn init(&mut self) -> () {
+    pub fn init<P>(&mut self, path: P) -> ()
+    where
+        P: Into<PathBuf>,
+    {
+        let datapath = DataPath::Path(path.into());
+
         // Read command line options.
         let options = Options {
             jobs: None,
             mode: Mode::TwoD,
-            input_path: DataPath::Default,
+            input_path: datapath,
             ui: UIVisibility::None,
             background_color: BackgroundColor::Light,
             high_performance_gpu: true,
@@ -46,8 +51,7 @@ impl PathfinderRenderer {
 #[test]
 fn run_100_frames() {
     let mut p = PathfinderRenderer::new();
-    p.init();
+    p.init("/home/spencer/Skole/Thesis/vgpu-bench/assets/svg/examples/Flag_of_Denmark.svg");
     let durs = p.render(100);
-
     println!("Durs: {:?}", durs);
 }
