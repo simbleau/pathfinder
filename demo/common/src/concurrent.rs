@@ -20,7 +20,9 @@ pub struct DemoExecutor {
 
 impl DemoExecutor {
     pub fn new(thread_count: Option<usize>) -> DemoExecutor {
-        let sequential_mode = thread_count == Some(1);
+        // Enable sequential mode for vgpu_bench
+        let sequential_mode = true;
+        //let sequential_mode = thread_count == Some(1);
         if !sequential_mode {
             let mut thread_pool_builder = ThreadPoolBuilder::new();
             if let Some(thread_count) = thread_count {
