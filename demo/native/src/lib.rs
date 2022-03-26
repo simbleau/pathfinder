@@ -54,6 +54,6 @@ impl PathfinderRenderer {
 fn run_100_frames() {
     let mut p = PathfinderRenderer::new();
     p.init("/home/simbleau/git/vgpu-bench/assets/svg/examples/ASU.svg");
-    let durs = p.render(20);
+    let durs = p.render(100);
     println!("Durs: {:?}", durs);
 }
