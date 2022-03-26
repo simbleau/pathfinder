@@ -40,9 +40,11 @@ impl PathfinderRenderer {
     }
 
     pub fn render(&mut self, frames: usize) -> Vec<Duration> {
-        let app = self.app.as_mut().unwrap();
-        let durs = renderer::run(frames, app);
+        let mut app = self.app.take().unwrap();
+        let durs = renderer::run(frames, &mut app);
+        app.should_exit = true;
         app.window.quit();
+        drop(app);
         durs
     }
 }
