@@ -88,9 +88,6 @@ pub fn run(frames: usize, app: &mut DemoApp<WindowImpl>) -> Vec<Duration> {
     let mut i: usize = 0;
     let mut durs = Vec::<Duration>::new();
     while i < frames {
-        i += 1;
-        let t1 = Instant::now();
-
         // Begin rendering
         let mut events = vec![];
 
@@ -100,6 +97,8 @@ pub fn run(frames: usize, app: &mut DemoApp<WindowImpl>) -> Vec<Duration> {
         };
         events.push(event);
 
+        i += 1;
+        let t1 = Instant::now();
         let scene_count = app.prepare_frame(events);
 
         app.draw_scene();
@@ -107,12 +106,12 @@ pub fn run(frames: usize, app: &mut DemoApp<WindowImpl>) -> Vec<Duration> {
         for scene_index in 0..scene_count {
             app.composite_scene(scene_index);
         }
-        app.finish_drawing_frame();
-
         // Finished rendering
         let t2 = Instant::now();
         let dur = t2.duration_since(t1);
         durs.push(dur);
+
+        app.finish_drawing_frame();
     }
 
     durs

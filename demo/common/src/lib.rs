@@ -501,7 +501,7 @@ where
     }
 
     pub fn finish_drawing_frame(&mut self) {
-        self.maybe_take_screenshot();
+        //self.maybe_take_screenshot();
 
         let frame = self.current_frame.take().unwrap();
         for ui_event in &frame.ui_events {
